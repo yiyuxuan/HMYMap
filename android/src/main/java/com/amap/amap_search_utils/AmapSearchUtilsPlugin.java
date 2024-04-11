@@ -1,4 +1,4 @@
-package com.example.amap_search_utils;
+package com.amap.amap_search_utils;
 
 import android.content.Context;
 import android.text.TextUtils;
