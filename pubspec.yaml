@@ -1,12 +1,11 @@
-name: amap_search_utils
-description: 高德官方没有提供search相关的Flutter插件，本插件针对高德地图搜索功能官方原生插件进行封装
-version: 1.0.0
-homepage: https://github.com/zhaofawu/amap_search_utils
-repository: https://github.com/zhaofawu/amap_search_utils
+name: amap_flutter_location
+description: 高德定位SDK Flutter插件
+version: 3.0.0
+homepage: https://lbs.amap.com/
 
 environment:
-  sdk: ">=2.15.1 <4.0.0"
-  flutter: ">=2.5.0"
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=1.20.0"
 
 dependencies:
   flutter:
@@ -15,7 +14,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^1.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -29,10 +27,10 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.example.amap_search_utils
-        pluginClass: AmapSearchUtilsPlugin
+        package: com.amap.flutter.location
+        pluginClass: AMapFlutterLocationPlugin
       ios:
-        pluginClass: AmapSearchUtilsPlugin
+        pluginClass: AMapFlutterLocationPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
