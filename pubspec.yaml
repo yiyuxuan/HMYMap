@@ -20,11 +20,15 @@ dependencies:
   flutter_plugin_android_lifecycle: ^2.0.17
   plugin_platform_interface: ^2.1.8
   stream_transform: ^2.0.0
+  x_amap_base:
+    git:
+      url: 'https://github.com/yiyuxuan/HMYMap.git'
+      ref: map_base
 
 #  x_amap_base: ^1.0.1
   # provider: ^6.1.1
-  x_amap_base:
-    path: ../amap_base-main
+  # x_amap_base:
+  #   path: ../amap_base-main
 
 dev_dependencies:
   flutter_test:
