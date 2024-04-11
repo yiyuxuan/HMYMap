@@ -7,10 +7,10 @@ import androidx.annotation.NonNull;
 
 import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.LatLonPoint;
-import com.amap.api.services.core.PoiItem;
+import com.amap.api.services.core.PoiItemV2;
 import com.amap.api.services.core.ServiceSettings;
-import com.amap.api.services.poisearch.PoiResult;
-import com.amap.api.services.poisearch.PoiSearch;
+import com.amap.api.services.poisearch.PoiResultV2;
+import com.amap.api.services.poisearch.PoiSearchV2;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -28,7 +28,7 @@ import io.flutter.plugin.common.MethodChannel.Result;
 
 /** AmapSearchUtilsPlugin */
 public class AmapSearchUtilsPlugin implements FlutterPlugin, MethodCallHandler,
-        PoiSearch.OnPoiSearchListener {
+        PoiSearchV2.OnPoiSearchListener {
   /// The MethodChannel that will the communication between Flutter and native Android
   ///
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -36,7 +36,7 @@ public class AmapSearchUtilsPlugin implements FlutterPlugin, MethodCallHandler,
   private MethodChannel channel;
   private Context mContext = null;
   private Result resultCallback = null;
-  private PoiSearch poiSearch = null;
+  private PoiSearchV2 poiSearch = null;
 
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
@@ -133,11 +133,11 @@ public class AmapSearchUtilsPlugin implements FlutterPlugin, MethodCallHandler,
     if (null != searchParams) {
       String keyword = (String) searchParams.get("keyword");
       String city = (String) searchParams.get("city");
-      PoiSearch.Query query = new PoiSearch.Query(keyword,"",city);
+      PoiSearchV2.Query query = new PoiSearchV2.Query(keyword,"",city);
       query.setPageSize(35);
       query.setPageNum(1);
 
-      poiSearch = new PoiSearch(mContext,query);
+      poiSearch = new PoiSearchV2(mContext,query);
       poiSearch.setOnPoiSearchListener(this);
       poiSearch.searchPOIAsyn();
       resultCallback = result;
@@ -156,12 +156,12 @@ public class AmapSearchUtilsPlugin implements FlutterPlugin, MethodCallHandler,
       Double latitude = (Double) searchParams.get("latitude");
       Double longitude = (Double) searchParams.get("longitude");
 
-      PoiSearch.Query query = new PoiSearch.Query(keyword,"",city);
+      PoiSearchV2.Query query = new PoiSearchV2.Query(keyword,"",city);
       query.setPageSize(35);
       query.setPageNum(1);
 
-      poiSearch = new PoiSearch(mContext,query);
-      poiSearch.setBound(new PoiSearch.SearchBound(new LatLonPoint(latitude,longitude),1000));
+      poiSearch = new PoiSearchV2(mContext,query);
+      poiSearch.setBound(new PoiSearchV2.SearchBound(new LatLonPoint(latitude,longitude),1000));
 
       poiSearch.setOnPoiSearchListener(this);
       poiSearch.searchPOIAsyn();
@@ -171,23 +171,24 @@ public class AmapSearchUtilsPlugin implements FlutterPlugin, MethodCallHandler,
 
 
   @Override
-  public void onPoiSearched(PoiResult poiResult, int i) {
-     List<Map> pois = new ArrayList<>();
+  public void onPoiSearched(PoiResultV2 poiResultV2, int i) {
+    List<Map> pois = new ArrayList<>();
 
-    for (int j = 0; j < poiResult.getPois().size(); j++) {
-      PoiItem item = poiResult.getPois().get(j);
+    for (int j = 0; j < poiResultV2.getPois().size(); j++) {
+      PoiItemV2 item = poiResultV2.getPois().get(j);
       Map poiMap = new HashMap<>();
       poiMap.put("adcode",item.getAdCode());
       poiMap.put("address",item.getSnippet());//地址
-      poiMap.put("businessArea",item.getBusinessArea());
+      poiMap.put("businessArea",item.getBusiness());
       poiMap.put("city",item.getCityName());
       poiMap.put("citycode",item.getCityCode());
-      poiMap.put("direction",item.getDirection());
-      poiMap.put("distance",item.getDistance());
+//      poiMap.put("direction",item.getDirection());
+//      poiMap.put("distance",item.getDistance());
       poiMap.put("district",item.getAdName());//行政区划名称
-      poiMap.put("email",item.getEmail());
+//      poiMap.put("email",item.getEmail());
       poiMap.put("gridcode","");// 安卓api中未找到
-      poiMap.put("hasIndoorMap",item.isIndoorMap());
+//      poiMap.put("hasIndoorMap",item.isIndoorMap());
+      poiMap.put("hasIndoorMap",item.getIndoorData());
 
       LatLonPoint point = item.getLatLonPoint();
       Map pointMap = new HashMap<>();
@@ -196,7 +197,7 @@ public class AmapSearchUtilsPlugin implements FlutterPlugin, MethodCallHandler,
 
       poiMap.put("location",pointMap);
       poiMap.put("name",item.getTitle());
-      poiMap.put("parkingType",item.getParkingType());
+//      poiMap.put("parkingType",item.getParkingType());
       poiMap.put("pcode",item.getProvinceCode());
       pois.add(poiMap);
     }
@@ -204,7 +205,7 @@ public class AmapSearchUtilsPlugin implements FlutterPlugin, MethodCallHandler,
   }
 
   @Override
-  public void onPoiItemSearched(PoiItem poiItem, int i) {
+  public void onPoiItemSearched(PoiItemV2 poiItemV2, int i) {
 
   }
 }

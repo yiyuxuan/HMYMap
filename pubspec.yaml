@@ -29,7 +29,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.example.amap_search_utils
+        package: com.amap.amap_search_utils
         pluginClass: AmapSearchUtilsPlugin
       ios:
         pluginClass: AmapSearchUtilsPlugin
