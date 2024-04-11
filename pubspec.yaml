@@ -7,9 +7,6 @@ platforms:
   android:
   ios:
   web:
-  linux:
-  macos:
-  windows:
 
 topics:
   - amap
