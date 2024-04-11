@@ -1,4 +1,4 @@
-group 'com.amap.amap_search_utils'
+group 'com.amap.flutter.amap_search_utils'
 version '1.0'
 
 buildscript {
