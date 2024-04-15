@@ -31,10 +31,10 @@ dependencies:
       url: 'https://github.com/yiyuxuan/HMYMap.git'
       ref: map_location
   
-  amap_search_utils:
-    git:
-      url: 'https://github.com/yiyuxuan/HMYMap.git'
-      ref: map_search
+  # amap_search_utils:
+  #   git:
+  #     url: 'https://github.com/yiyuxuan/HMYMap.git'
+  #     ref: map_search
 
 #  x_amap_base: ^1.0.1
   # provider: ^6.1.1
