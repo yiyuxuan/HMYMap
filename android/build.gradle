@@ -1,18 +1,20 @@
-group 'com.amap.amap_search_utils'
-version '1.0'
+group 'com.github.hugochou.amap_search'
+version '1.0-SNAPSHOT'
 
 buildscript {
+    ext.kotlin_version = '1.7.10'
     repositories {
         google()
         mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath 'com.android.tools.build:gradle:7.2.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
-rootProject.allprojects {
+allprojects {
     repositories {
         google()
         mavenCentral()
@@ -20,13 +22,22 @@ rootProject.allprojects {
 }
 
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
     }
 
     defaultConfig {
@@ -34,7 +45,11 @@ android {
     }
 
     dependencies {
-        compileOnly 'com.amap.api:search:9.7.0'
+        //搜索功能
+        implementation 'com.amap.api:search:9.7.0'
+        // 需要getter和setter序列化时, 使用fastjson
+        implementation 'com.alibaba:fastjson:1.2.54'
+        // 其他情况使用gson, fastjson会有默认构造器问题
+        implementation 'com.google.code.gson:gson:2.8.9'
     }
-
 }
